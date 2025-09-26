@@ -4,8 +4,19 @@ on:
     branches:
       - dev
   pull_request:
+    types: 
+      - opened
+      - synchronize
+      - reopened
     branches:
       - main
+  workflow_dispatch:
+    branches:
+      - main
+  issues:
+    types: [opened, edited, reopened]
+  # schedule:
+  #   - cron: '0 0 * * 0' # Runs every Sunday at midnight
   
 jobs:
   test:
