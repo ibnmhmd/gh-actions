@@ -1,2 +1,2 @@
-declare const Hello: (name: string) => string;
+export {};
 //# sourceMappingURL=index.d.ts.map

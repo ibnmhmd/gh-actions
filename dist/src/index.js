@@ -1,5 +1,7 @@
 "use strict";
-const Hello = (name) => {
-    return `Hello, ${name}!`;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-console.log(Hello("World"));
+Object.defineProperty(exports, "__esModule", { value: true });
+const sum_1 = __importDefault(require("./modules/sum"));
+console.log((0, sum_1.default)(2, 3));
