@@ -43,6 +43,8 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    outputs:
+      script-file: ${{ steps.publish-name.outputs.script-file }}
     steps:
       - name: Checkout code
         id: checkout
@@ -55,6 +57,9 @@ jobs:
         run: npm ci
       - name: Build project
         run: npm run build
+      - name: Publish JS filename
+        id: publish-name
+        run: find dist/src/*.js -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -74,6 +79,8 @@ jobs:
           name: build-artifacts
       - name: Show artifacts content
         run: ls
+      - name: Use built script file
+        run: echo "${{ needs.build.outputs.script-file }}"
       - name: Deploy to Production
         run: echo "Deploying to production server..."
         # Add your deployment commands here
