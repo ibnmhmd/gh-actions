@@ -22,6 +22,10 @@ on:
   #   - cron: '0 0 * * 0' # Runs every Sunday at midnight
   
 jobs:
+  env:
+    NODE_ENV: development
+    CI: true
+    ENV_LEVEL: WORKFLOW
   test:
     runs-on: ubuntu-latest
     steps:
@@ -41,6 +45,8 @@ jobs:
         run: npm ci
       - name: Run tests
         run: npm test
+      - name: Echo Environment Variables
+        run: echo "ENV_LEVEL is set to $ENV_LEVEL and NODE_ENV is set to ${{ env.NODE_ENV }}"
 
   build:
     needs: test
