@@ -25,8 +25,11 @@ env:
   NODE_ENV: development
   CI: true
   ENV_LEVEL: WORKFLOW
+
 jobs:
   test:
+    env:
+      NODE_ENV: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -37,17 +40,18 @@ jobs:
         with:
           node-version: '20'
       - name: Cache Node.js modules
+        id: cache-node-modules
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}  
       - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci
       - name: Run tests
         run: npm test
       - name: Echo Environment Variables
         run: echo "ENV_LEVEL is set to $ENV_LEVEL and NODE_ENV is set to ${{ env.NODE_ENV }}"
-
   build:
     needs: test
     runs-on: ubuntu-latest
@@ -100,5 +104,11 @@ jobs:
         run: echo "${{ needs.build.outputs.script-file }}"
       - name: Deploy to Production
         run: echo "Deploying to production server..."
-        # Add your deployment commands here
+  report:
+    name: Report Job Status
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Job Status
+        run: echo "The job has completed with status ${{ job.status }}"
   
