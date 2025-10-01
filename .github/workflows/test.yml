@@ -20,12 +20,12 @@ on:
     types: [opened, edited, reopened]
   # schedule:
   #   - cron: '0 0 * * 0' # Runs every Sunday at midnight
-  
+
+env:
+  NODE_ENV: development
+  CI: true
+  ENV_LEVEL: WORKFLOW
 jobs:
-  env:
-    NODE_ENV: development
-    CI: true
-    ENV_LEVEL: WORKFLOW
   test:
     runs-on: ubuntu-latest
     steps:
