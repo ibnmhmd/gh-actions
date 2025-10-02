@@ -56,14 +56,14 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node-version: [20, 18]
         include:
           - os: ubuntu-latest
-          - os: windows-latest
-          - os: macos-latest
+            node-version: 16
         exclude:
           - os: windows-latest
-            node-version: 16
-        node-version: [20, 18, 16]
+            node-version: 18
     needs: test
     runs-on: ${{ matrix.os }} #ubuntu-latest
     outputs:
