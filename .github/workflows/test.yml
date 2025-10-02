@@ -115,6 +115,15 @@ jobs:
         run: echo "${{ needs.build.outputs.script-file }}"
       - name: Deploy to Production
         run: echo "Deploying to production server..."
+
+  reusable-workflow:
+    needs: build
+    uses: ./.github/workflows/reusable.yml
+    with:
+      node-version: '20'
+      artifact-name: 'build-artifacts'
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   report:
     name: Report Job Status
     if: always()

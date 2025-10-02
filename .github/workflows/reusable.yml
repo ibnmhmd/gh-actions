@@ -1,0 +1,36 @@
+name: Reusable Workflow
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        description: 'Node.js version to use'
+        required: false
+        type: string
+        default: '20'
+      artifact-name:
+        description: 'Name of the artifact to upload'
+        required: true
+        type: string
+        default: 'build-artifact'
+    secrets:
+      NPM_TOKEN:
+        required: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Calling out to reusable workflow
+        run: echo "This step is just a placeholder"
+      - name: Artifact Name
+        run: echo "Artifact name is ${{ inputs.artifact-name }}"
+  
+      # - name: Authenticate to npm registry
+      #   run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+      # - name: Install dependencies
+      #   run: npm ci
+      # - name: Build project
+      #   run: npm run build
+      # - name: Output script file path
+      #   id: publish-name
+      #   run: echo "script-file=dist/index.js" >> $GITHUB_OUTPUT
