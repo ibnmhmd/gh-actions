@@ -59,7 +59,7 @@ jobs:
           - os: ubuntu-latest
           - os: windows-latest
           - os: macos-latest
-        node-version: '20'
+        node-version: [20, 18, 16]
     needs: test
     runs-on: ${{ matrix.os }} #ubuntu-latest
     outputs:
