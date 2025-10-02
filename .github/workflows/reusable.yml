@@ -14,7 +14,7 @@ on:
         default: 'build-artifact'
     secrets:
       NPM_TOKEN:
-        required: false
+        required: true
 
 jobs:
   build:
@@ -24,6 +24,8 @@ jobs:
         run: echo "This step is just a placeholder"
       - name: Artifact Name
         run: echo "Artifact name is ${{ inputs.artifact-name }}"
+      - name: Reusable Input secrets
+        run: echo "NPM Token is ${{ secrets.NPM_TOKEN }}"
   
       # - name: Authenticate to npm registry
       #   run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
