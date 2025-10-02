@@ -123,7 +123,14 @@ jobs:
       node-version: '20'
       artifact-name: 'build-artifacts'
     secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      NPM_TOKEN: "NPM-SECRET-VALUE"
+
+  workflow-result:
+    needs: reusable-workflow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get reusable workflow output
+        run: echo "Reusable workflow result ${{ needs.reusable-workflow.outputs.workflow-result }}"
   report:
     name: Report Job Status
     if: always()

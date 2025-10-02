@@ -12,6 +12,12 @@ on:
         required: true
         type: string
         default: 'build-artifact'
+   
+    outputs:
+      workflow-result:
+        description: 'Job output from build job'
+        value: ${{ jobs.build.outputs.build-output }}
+
     secrets:
       NPM_TOKEN:
         required: true
@@ -19,6 +25,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      build-output: ${{ steps.set-output.outputs.build-result }}
     steps:
       - name: Calling out to reusable workflow
         run: echo "This step is just a placeholder"
@@ -26,7 +34,9 @@ jobs:
         run: echo "Artifact name is ${{ inputs.artifact-name }}"
       - name: Reusable Input secrets
         run: echo "NPM Token is ${{ secrets.NPM_TOKEN }}"
-  
+      - name: Set Result Output
+        id: set-output
+        run: echo "build-result=SUCCESS" >> $GITHUB_OUTPUT
       # - name: Authenticate to npm registry
       #   run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
       # - name: Install dependencies
