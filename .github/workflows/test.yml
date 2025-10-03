@@ -30,7 +30,6 @@ jobs:
   test:
     container: # Use a container to run the job
       image: node:20 # Use the official Node.js 20 image
-      options: --user node
     env:
       NODE_ENV: test
     runs-on: ubuntu-latest
