@@ -28,6 +28,9 @@ env:
 
 jobs:
   test:
+    container: # Use a container to run the job
+      image: node:20 # Use the official Node.js 20 image
+      options: --user node
     env:
       NODE_ENV: test
     runs-on: ubuntu-latest
@@ -35,10 +38,10 @@ jobs:
       - name: Checkout code
         id: checkout
         uses: actions/checkout@v5
-      - name: Set up Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: '20'
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v5
+      #   with:
+      #     node-version: '20'
       - name: Cache Node.js modules
         id: cache-node-modules
         uses: actions/cache@v3
