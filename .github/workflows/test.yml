@@ -41,15 +41,8 @@ jobs:
       #   uses: actions/setup-node@v5
       #   with:
       #     node-version: '20'
-      - name: Cache Node.js modules
-        id: cache-node-modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}  
-      - name: Install dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: npm ci
+      - name: Fetch cached Node.js modules
+        uses: ./.github/workflows/actions/cached-deps
       - name: Run tests
         run: npm test
       - name: Echo Environment Variables
@@ -133,6 +126,7 @@ jobs:
     steps:
       - name: Get reusable workflow output
         run: echo "Reusable workflow result ${{ needs.reusable-workflow.outputs.workflow-result }}"
+
   report:
     name: Report Job Status
     if: always()
