@@ -43,6 +43,8 @@ jobs:
       #     node-version: '20'
       - name: Fetch cached Node.js modules
         uses: ./.github/workflows/actions/cached-deps
+        with:
+          caching: 'true'
       - name: Run tests
         run: npm test
       - name: Echo Environment Variables
@@ -73,6 +75,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Fetch cached Node.js modules
         uses: ./.github/workflows/actions/cached-deps
+        with:
+          caching: 'true'
       - name: Echo OS info
         run: uname -a
       - name: Echo Runner info
