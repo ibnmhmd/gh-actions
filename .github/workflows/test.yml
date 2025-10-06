@@ -42,9 +42,12 @@ jobs:
       #   with:
       #     node-version: '20'
       - name: Fetch cached Node.js modules
+        id: fetch-cache
         uses: ./.github/workflows/actions/cached-deps
         with:
           caching: 'true'
+      - name: Echo Cache Status
+        run: echo "Cache used ? ${{ steps.fetch-cache.outputs.cache-used }}"
       - name: Run tests
         run: npm test
       - name: Echo Environment Variables
