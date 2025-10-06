@@ -5,6 +5,7 @@ inputs:
     description: 'Whether or not to cache dependencies.'
     required: true
     type: boolean
+    
 outputs:
   cache-status:
     description: 'Whether the cache was used or not.'

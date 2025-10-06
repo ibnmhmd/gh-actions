@@ -45,7 +45,7 @@ jobs:
         id: fetch-cache
         uses: ./.github/workflows/actions/cached-deps
         with:
-          caching: 'true'
+          caching: 'false'
       - name: Echo Cache Status
         run: echo "Cache used ? ${{ steps.fetch-cache.outputs.cache-status }}"
       - name: Run tests
