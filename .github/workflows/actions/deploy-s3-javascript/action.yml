@@ -1,0 +1,19 @@
+name: 'Deploy to AWS S3'
+description: 'Deploy built JavaScript files to an AWS S3 bucket.'
+inputs:
+  aws-access-key-id:
+    description: 'AWS Access Key ID'
+    required: true
+    type: string
+  aws-secret-access-key:
+    description: 'AWS Secret Access Key'
+    required: true
+    type: string 
+  aws-region:
+    description: 'AWS Region'
+    required: true
+    type: string  
+
+runs:
+  using: 'node22'
+  main: 'index.js'
