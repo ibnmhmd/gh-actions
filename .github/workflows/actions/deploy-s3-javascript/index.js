@@ -4,16 +4,25 @@ const { exec } = require('@actions/exec');
 
 const run = async () => {
     core.notice('Starting deployment to S3...');
-    // try {
-    //     const bucketName = core.getInput('bucket-name', { required: true });
-    //     const region = core.getInput('region', { required: true });
-    //     const accessKeyId = core.getInput('access-key-id', { required: true });
-    //     const secretAccessKey = core.getInput('secret-access-key', { required: true });
-    //     const sourceDir = core.getInput('source-dir') || 'dist';
-    //     const destinationDir = core.getInput('destination-dir') || '/';
-    // } catch (error) {
-    //     core.setFailed(`Deployment failed: ${error.message}`);
-    // }
+    try {
+        const bucketName = core.getInput('bucket-name', { required: true });
+        const region = core.getInput('aws-region', { required: true });
+        const accessKeyId = core.getInput('aws-access-key-id', { required: true });
+        const secretAccessKey = core.getInput('aws-secret-access-key', { required: true });
+        const sourceDir = core.getInput('source-dir', { required: true }) || 'dist';
+        exec.exec('aws s3 sync', [], {
+            env: {
+                ...process.env,
+                AWS_ACCESS_KEY_ID: accessKeyId,
+                AWS_SECRET_ACCESS_KEY: secretAccessKey,
+                AWS_DEFAULT_REGION: region,
+            },
+            args: [`${sourceDir}/`, `s3://${bucketName}/`, '--delete'],
+        });
+        core.notice('Deployment to S3 completed successfully.');
+    } catch (error) {
+        core.setFailed(`Deployment failed: ${error.message}`);
+    }
 };
 
 run();

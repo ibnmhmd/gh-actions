@@ -11,8 +11,17 @@ inputs:
     type: string 
   aws-region:
     description: 'AWS Region'
-    required: true
+    required: false
+    default: 'us-east-1'
     type: string  
+  bucket-name:
+    description: 'S3 Bucket Name'
+    required: true
+    type: string
+  source-dir:
+    description: 'Folder containing built JavaScript files'
+    required: true
+    type: string
 
 runs:
   using: 'node24'
