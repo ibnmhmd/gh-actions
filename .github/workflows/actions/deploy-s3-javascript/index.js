@@ -10,15 +10,16 @@ const run = async () => {
         const accessKeyId = core.getInput('aws-access-key-id', { required: true });
         const secretAccessKey = core.getInput('aws-secret-access-key', { required: true });
         const sourceDir = core.getInput('source-dir', { required: true }) || 'dist';
-        exec.exec('aws s3 sync', [], {
+      await exec.exec('aws', ['s3','sync',`${sourceDir}/`, `s3://${bucketName}/`,'--delete'], 
+        {
             env: {
                 ...process.env,
                 AWS_ACCESS_KEY_ID: accessKeyId,
                 AWS_SECRET_ACCESS_KEY: secretAccessKey,
                 AWS_DEFAULT_REGION: region,
-            },
-            args: [`${sourceDir}/`, `s3://${bucketName}/`, '--delete'],
+              }
         });
+        
         core.notice('Deployment to S3 completed successfully.');
     } catch (error) {
         core.setFailed(`Deployment failed: ${error.message}`);
