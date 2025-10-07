@@ -146,7 +146,7 @@ jobs:
         run: echo "The job has completed with status ${{ job.status }}"
 
   deploytoawss3:
-    needs: deploy
+    needs: build
     runs-on: ubuntu-latest
     # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
