@@ -157,11 +157,14 @@ jobs:
         with:
           name: build-artifacts
       - name: Deploy to AWS S3
+        id: deploy-to-s3
         uses: ./.github/workflows/actions/deploy-s3-javascript
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: 'us-east-1'
           bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME }}
-          source-dir: 'dist/src'
+          source-dir: 'dist'
+      - name: Echo Bucket URL
+        run: echo "Bucket URL is ${{ steps.deploy-to-s3.outputs.bucket-url }}"
   
